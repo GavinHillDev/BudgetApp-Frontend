@@ -1,6 +1,7 @@
 <main class="main">
   <div class="content">
     <h1>This is a Sign Up Page</h1>
+    <h1 hidden>That Email Already Exists</h1>
     <label for="username">Username: </label>
     <input id="username" type="text" [formControl]="username">
     <label for="email">Email: </label>
@@ -11,7 +12,7 @@
     <p>Value: {{ username.value }}</p>
     <p>Value: {{ email.value }}</p>
     <p>Value: {{ password.value }}</p>
-    <button>Sign Up</button>
+    <button type="button" (click) ="validateSignUp()">Sign Up</button>
   </div>
 </main>
 
