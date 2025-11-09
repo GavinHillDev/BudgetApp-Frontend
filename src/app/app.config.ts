@@ -11,3 +11,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideClientHydration(withEventReplay())
   ]
 };
+//Log in Page with Auth
+//Display users based off user logged in
+// CRUD
+//Search and view transactions / Categories
+// Tracked Total Spent / MAybe display graph
+// Good UI

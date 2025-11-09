@@ -1,0 +1,20 @@
+<main class="main">
+  <div class="content">
+    <h1>This is a Sign Up Page</h1>
+    <label for="username">Username: </label>
+    <input id="username" type="text" [formControl]="username">
+    <label for="email">Email: </label>
+    <input id="email" type="text" [formControl]="email">
+    <label for="password">Password: </label>
+    <input id="password" type="text" [formControl]="password">
+
+    <p>Value: {{ username.value }}</p>
+    <p>Value: {{ email.value }}</p>
+    <p>Value: {{ password.value }}</p>
+    <button>Sign Up</button>
+  </div>
+</main>
+
+
+<router-outlet />
+ 
