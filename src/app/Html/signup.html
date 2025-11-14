@@ -1,18 +1,30 @@
 <main class="main">
   <div class="content">
     <h1>This is a Sign Up Page</h1>
-    <h1 hidden>That Email Already Exists</h1>
-    <label for="username">Username: </label>
+    <h1 *ngIf="userExists" style="color: red">User already Exists. <br /> Please Log In Instead</h1>
+
+    <!--<label for="username">Username: </label>
     <input id="username" type="text" [formControl]="username">
     <label for="email">Email: </label>
     <input id="email" type="text" [formControl]="email">
     <label for="password">Password: </label>
-    <input id="password" type="text" [formControl]="password">
+    <input id="password" type="text" [formControl]="password">-->
 
-    <p>Value: {{ username.value }}</p>
+    <form [formGroup]="form">
+      <label for="Username">Username: </label>
+      <input type="text" formControlName="Username" placeholder="Username">
+      <label for="Email">Email: </label>
+      <input type="email" formControlName="Email" placeholder="Email">
+      <label for="Password">Password: </label>
+      <input type="password" formControlName="Password" placeholder="Password">
+     
+    </form>
+
+
+    <!--<p>Value: {{ username.value }}</p>
     <p>Value: {{ email.value }}</p>
-    <p>Value: {{ password.value }}</p>
-    <button type="button" (click) ="validateSignUp()">Sign Up</button>
+    <p>Value: {{ password.value }}</p>-->
+    <button type="button" (click)="validateSignUp()">Sign Up</button>
   </div>
 </main>
 

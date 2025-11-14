@@ -1,51 +1,67 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { inject } from '@angular/core';
-import { HttpClient, HttpParams, HttpParameterCodec, HttpClientModule } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule,HttpClientModule],
   templateUrl: '../Html/signup.html',
+  imports: [CommonModule, RouterOutlet, ReactiveFormsModule],
   //styleUrl: './app.css'
 })
 export class SignupComponent {
-  username = new FormControl('');
-  email = new FormControl('');
-  password = new FormControl('');
-  
+  form = new FormGroup({
+    Username: new FormControl(''),
+    Email: new FormControl(''),
+    Password: new FormControl('')
+  });
+  userExists = false; //Alert For SignUpCheck
+  userExistsInput = ''; //Input Signup
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5113/api/Users';
 
-  getUserById(id: number) {
-    return this.http.get<{ id: number; username: string }>(`${this.apiUrl}/${id}`);
+  //getUserById(id: number) {
+  //  return this.http.get<{ id: number; username: string }>(`${this.apiUrl}/${id}`);
 
-  }
+  //}
 
  
   validateSignUp() {
+    const email = this.form.get('Email')?.value;
+
     console.log("Called")
-    this.http.get<{ exists: boolean }>(`${this.apiUrl}/check/${this.email.value}`).subscribe({
+    this.http.get<{ exists: boolean }>(`${this.apiUrl}/check/${email}`).subscribe({
       next: res => {
         if (res.exists) {
           console.log("User Exists");
           
         } else {
           console.log("User available");
+          this.createUser();
         }
+         
       },
-      error: err => console.error("Failed to check username:", err)
+      error: err => console.error("Failed to check email:", err)
     });
   }
 
-  ngOnInit() {
-    this.getUserById(1).subscribe({
-      next: (data) =>  data.username,
-      error: (err) => console.error('Failed to load user:', err)
-    });
+
+  createUser() {
+    console.log("Create User Called");
+    const createdUser = {
+      Username: this.form.get('Username')?.value,
+      Email: this.form.get('Email')?.value,
+      Password: this.form.get('Password')?.value
+    };
+    console.log(createdUser);
+    this.http.post(this.apiUrl,createdUser).subscribe({
+      next: res => { console.log("User Created") }
+     , error: err => console.error('Failed to create user', err)
+    })
+    this.form.reset();
   }
+
 
 }
-//Show Notice and clear email field when username is taken, same with username
