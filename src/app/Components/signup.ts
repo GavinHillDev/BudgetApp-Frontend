@@ -36,9 +36,12 @@ export class SignupComponent {
       next: res => {
         if (res.exists) {
           console.log("User Exists");
+          this.userExists = true;
+          this.form.reset();
           
         } else {
           console.log("User available");
+          
           this.createUser();
         }
          
@@ -56,7 +59,7 @@ export class SignupComponent {
       Password: this.form.get('Password')?.value
     };
     console.log(createdUser);
-    this.http.post(this.apiUrl,createdUser).subscribe({
+    this.http.post(`${this.apiUrl}/register`,createdUser).subscribe({
       next: res => { console.log("User Created") }
      , error: err => console.error('Failed to create user', err)
     })

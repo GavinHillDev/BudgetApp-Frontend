@@ -1,19 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { error } from 'console';
 @Component({
   selector: 'login',
   standalone : true,
-  imports: [RouterOutlet, ReactiveFormsModule],
+  imports: [CommonModule,RouterOutlet, ReactiveFormsModule],
   templateUrl: '../Html/login.html',
   //styleUrl: './app.css'
   
 })
 export class LoginComponent {
-  email = new FormControl('');
-  password = new FormControl('');
-
-
-
+  form = new FormGroup({
+    Username: new FormControl(''),
+    Email: new FormControl(''),
+    Password: new FormControl('')
+  });
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:5113/api/Users/login';
+  noUser = false; //Alert For SignUpCheck
+  userExistsInput = ''; //Input Signup
+  validateLogin() {
+    const email = this.form.get('Email')?.value;
+    const entereduserInfo = {
+      Email: this.form.get('Email')?.value,
+      Password: this.form.get('Password')?.value
+    }
+    this.http.post(this.apiUrl, entereduserInfo).subscribe({
+      next: res => { console.log("Login Successful") }
+      , error: err => console.error('Failed to Login', err)
+    })
+    //t@t.com - p 12
+  }
 }

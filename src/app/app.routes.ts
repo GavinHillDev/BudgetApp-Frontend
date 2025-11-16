@@ -11,5 +11,6 @@ export const routes: Routes = [
     path: 'signup',
     component: SignupComponent
   },
+  
   { path: '', component: HomeComponent }
 ];
