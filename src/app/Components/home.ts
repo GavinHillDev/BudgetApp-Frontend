@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { AppleService } from '../Services/apple.service';
 @Component({
   selector: 'home',
   standalone: true,
@@ -8,4 +8,11 @@ import { Component } from '@angular/core';
     <p>This is the home page.</p>
   `
 })
-export class HomeComponent {}
+export class HomeComponent {
+  //constructor(private appleService: AppleService) { }
+  //ngOnInit() {
+  //  // This could be called automatically or via a button, etc.
+  //  this.appleService.logApples();
+  //}
+
+}

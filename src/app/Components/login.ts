@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RouterOutlet, Router } from '@angular/router';
 //import { LoginResponse } from './Components/loginresponse';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { error } from 'console';
+import { AppleService } from '../Services/apple.service';
 @Component({
   selector: 'login',
   standalone : true,
@@ -20,6 +21,18 @@ export class LoginComponent {
     Email: new FormControl(''),
     Password: new FormControl('')
   });
+
+  username: string = "";
+  email: string = "";
+  user = {
+    username: "",
+    id: 0,
+    email: ""
+  };
+  constructor(private appleService: AppleService) { }
+
+
+
   private router = inject(Router);
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5113/api/Users/login';
@@ -35,6 +48,8 @@ export class LoginComponent {
       next: (res: any) => {
         localStorage.setItem("token", res.token)
         console.log(res.token)
+
+
         this.dashboardNavigation()
       }
       , error: err => console.error('Failed to Login', err)
@@ -42,6 +57,28 @@ export class LoginComponent {
     //t@t.com - p 12
   }
   dashboardNavigation() {
-    this.router.navigate(['/dashboard']);
+    const token = localStorage.getItem("token");
+    console.log("TOKEN:", token);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    this.http.get<Object>('http://localhost:5113/api/Users/me', { headers, withCredentials: true }).subscribe({
+      next: res => {
+         
+        this.user = {
+          username: res['username' as keyof Object].toString(),
+          id: Number(res['id' as keyof Object]),
+          email: res['email' as keyof Object].toString()
+        }
+        this.username = res['username' as keyof Object].toString();
+        this.appleService.setUser(this.user)
+        this.router.navigate(['/dashboard']);
+      }
+      , error: err => console.error('Failed to Login', err)
+    })
+
+
+    
   }
 }
