@@ -13,11 +13,8 @@ export interface User {
 @Injectable({
   providedIn: 'root'
 })
-export class AppleService {
+export class AuthService {
 
-  logApples() {
-    console.log("🍎 Apples logged from service!");
-  }
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5113/api/Users';
   private userSubject = new BehaviorSubject<User | null>(null);
@@ -29,20 +26,25 @@ export class AppleService {
 
   /** Called once on page load */
   private tryRestoreUser() {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    this.http.get<User>('http://localhost:5113/api/Users/me', { headers, withCredentials: true }).subscribe({
-      next: (user) => {
-        this.userSubject.next(user);
-      },
-      error: () => {
-        // Token invalid/expired → clear it
-        localStorage.removeItem('token');
-      }
-    });
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+      this.http.get<User>('http://localhost:5113/api/Users/me', { headers, withCredentials: true }).subscribe({
+        next: (user) => {
+          this.userSubject.next(user);
+        },
+        error: () => {
+          // Token invalid/expired → clear it
+          localStorage.removeItem('token');
+        }
+      });
+    } catch (error: any) {
+      return;
+    }
+     
   }
 
   setUser(user: User) {

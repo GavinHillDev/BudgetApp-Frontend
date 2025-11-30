@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppleService } from '../Services/apple.service';
+
 @Component({
   selector: 'home',
   standalone: true,

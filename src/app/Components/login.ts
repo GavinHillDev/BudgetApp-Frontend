@@ -5,7 +5,7 @@ import { RouterOutlet, Router } from '@angular/router';
 //import { LoginResponse } from './Components/loginresponse';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { error } from 'console';
-import { AppleService } from '../Services/apple.service';
+import { AuthService } from '../Services/login.service';
 @Component({
   selector: 'login',
   standalone : true,
@@ -29,7 +29,7 @@ export class LoginComponent {
     id: 0,
     email: ""
   };
-  constructor(private appleService: AppleService) { }
+  constructor(private authService: AuthService) { }
 
 
 
@@ -72,7 +72,7 @@ export class LoginComponent {
           email: res['email' as keyof Object].toString()
         }
         this.username = res['username' as keyof Object].toString();
-        this.appleService.setUser(this.user)
+        this.authService.setUser(this.user)
         this.router.navigate(['/dashboard']);
       }
       , error: err => console.error('Failed to Login', err)

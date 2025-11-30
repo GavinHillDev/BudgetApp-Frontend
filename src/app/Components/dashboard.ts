@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Console, error } from 'console';
-import { AppleService } from '../Services/apple.service';
+import { AuthService } from '../Services/login.service';
 @Component({
   selector: 'dashboard',
   standalone: true,
@@ -19,10 +19,10 @@ import { AppleService } from '../Services/apple.service';
   userName: String = "";
   email: string = "";
 
-  constructor(private appleService: AppleService) { }
+  constructor(private authService: AuthService) { }
   ngOnInit() {
-    this.appleService.loadUser();
-    var user = this.appleService.currentUser;
+    this.authService.loadUser();
+    var user = this.authService.currentUser;
 
     console.log(user?.username.toString())
     if (user != null) {
