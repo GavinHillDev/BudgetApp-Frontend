@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-
+import { RouterOutlet, Router } from '@angular/router';
+import { AuthService, User } from '../Services/login.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -17,15 +17,27 @@ export class SignupComponent {
     Email: new FormControl(''),
     Password: new FormControl('')
   });
+  loggeduser: User | null = null;
+
   userExists = false; //Alert For SignUpCheck
   userExistsInput = ''; //Input Signup
+  private router = inject(Router);
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5113/api/Users';
 
-  //getUserById(id: number) {
-  //  return this.http.get<{ id: number; username: string }>(`${this.apiUrl}/${id}`);
+  constructor(private authService: AuthService) { }
 
-  //}
+  ngOnInit() {
+
+    this.authService.user$.subscribe(u => {
+      this.loggeduser = u;
+
+      if (this.loggeduser != null) {
+        console.log("Navigated back to Dashboard")
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
 
  
   validateSignUp() {

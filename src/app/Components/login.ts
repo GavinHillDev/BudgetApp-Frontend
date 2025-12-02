@@ -5,8 +5,10 @@ import { RouterOutlet, Router } from '@angular/router';
 //import { LoginResponse } from './Components/loginresponse';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { error } from 'console';
-import { AuthService } from '../Services/login.service';
+import { AuthService, User } from '../Services/login.service';
+
 @Component({
+
   selector: 'login',
   standalone : true,
   imports: [CommonModule,RouterOutlet, ReactiveFormsModule],
@@ -21,7 +23,7 @@ export class LoginComponent {
     Email: new FormControl(''),
     Password: new FormControl('')
   });
-
+  loggeduser: User | null = null;
   username: string = "";
   email: string = "";
   user = {
@@ -31,7 +33,17 @@ export class LoginComponent {
   };
   constructor(private authService: AuthService) { }
 
-
+  ngOnInit() {
+     
+    this.authService.user$.subscribe(u => {
+      this.loggeduser = u;
+      
+      if (this.loggeduser != null) {
+        console.log("Navigated back to Dashboard")
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
 
   private router = inject(Router);
   private http = inject(HttpClient);

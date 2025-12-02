@@ -1,9 +1,29 @@
 <nav class="navbar">
-  <div class="logo">Budget App</div>
-  <div class="pill-group">
+  <div *ngIf="noUser" class="logo">Budget App</div>
+  <div *ngIf="noUser" class="pill-group">
     @for (item of [
     { title: 'Login', link: '/login' },
     { title: 'Sign Up', link: '/signup' }
+    ]; track item.title) {
+    <a class="pill"
+       [routerLink]="item.link"
+       routerLinkActive="active">
+      <span>{{ item.title }}</span>
+      <svg xmlns="http://www.w3.org/2000/svg"
+           height="14"
+           viewBox="0 -960 960 960"
+           width="14"
+           fill="currentColor">
+        <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
+      </svg>
+    </a>
+    }
+  </div>
+  <div *ngIf="userLoggedIn" class="logo">Dashboard</div>
+  <div *ngIf="userLoggedIn" class="pill-group">
+    @for (item of [
+    { title: 'Add Expense', link: '/transaction' },
+    { title: 'View Expenses', link: '/signup' }
     ]; track item.title) {
     <a class="pill"
        [routerLink]="item.link"
