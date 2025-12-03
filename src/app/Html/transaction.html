@@ -1,7 +1,22 @@
 <main class="main">
   <div class="content">
-    <h1>This is the transaction page</h1>
-    </div>
+    <h1>Create Transaction Page</h1>
+    
+
+    <form [formGroup]="form">
+      <label for="TransactionName">Transaction Name: </label>
+      <input type="text" formControlName="TransactionName" placeholder="Transaction Name">
+      <label for="TransactionPrice">Price: </label>
+      <input type="number" formControlName="TransactionPrice" placeholder="Transaction Price">
+      <label for="TransactionCategory">Category: </label>
+      <input type="search" formControlName="TransactionCategory" placeholder="Transaction Category">
+      <label for="TransactionDate">Date: </label>
+      <input type="date" formControlName="TransactionDate" placeholder="Transaction Date">
+
+    </form>
+
+    <button type="button" (click)="CreateTransaction()">Add Transaction</button>
+  </div>
 </main>
 
 

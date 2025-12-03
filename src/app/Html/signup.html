@@ -3,13 +3,6 @@
     <h1>This is a Sign Up Page</h1>
     <h1 *ngIf="userExists" style="color: red">User already Exists. <br /> Please Log In Instead</h1>
 
-    <!--<label for="username">Username: </label>
-    <input id="username" type="text" [formControl]="username">
-    <label for="email">Email: </label>
-    <input id="email" type="text" [formControl]="email">
-    <label for="password">Password: </label>
-    <input id="password" type="text" [formControl]="password">-->
-
     <form [formGroup]="form">
       <label for="Username">Username: </label>
       <input type="text" formControlName="Username" placeholder="Username">
