@@ -6,6 +6,7 @@ import { RouterOutlet, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { error } from 'console';
 import { AuthService, User } from '../Services/login.service';
+import { take } from 'rxjs/operators';
 
 @Component({
 
@@ -35,7 +36,7 @@ export class LoginComponent {
 
   ngOnInit() {
      
-    this.authService.user$.subscribe(u => {
+    this.authService.user$.pipe(take(1)).subscribe(u => {
       this.loggeduser = u;
       
       if (this.loggeduser != null) {

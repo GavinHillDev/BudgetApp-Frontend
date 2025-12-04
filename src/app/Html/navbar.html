@@ -23,7 +23,8 @@
   <div *ngIf="userLoggedIn" class="pill-group">
     @for (item of [
     { title: 'Add Expense', link: '/transaction' },
-    { title: 'View Expenses', link: '/signup' }
+    { title: 'View Expenses', link: '/signup' },
+    { title: 'Dashboard', link: '/dashboard' }
     ]; track item.title) {
     <a class="pill"
        [routerLink]="item.link"

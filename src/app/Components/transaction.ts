@@ -18,7 +18,7 @@ import { AuthService, User } from '../Services/login.service';
 })
 
 export class TransactionComponent {
-  constructor(private authService: AuthService) { }
+  //constructor(private authService: AuthService) { }
   form = new FormGroup({
     TransactionName: new FormControl(''),
     TransactionPrice: new FormControl(''),
@@ -26,33 +26,46 @@ export class TransactionComponent {
     TransactionDate: new FormControl('')
   });
 
-  loggeduser: User | null = null;
+  user: User | null = null;
 
-  userExists = false; //Alert For SignUpCheck
-  userExistsInput = ''; //Input Signup
-  private router = inject(Router);
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5113/api/Transactions';
-  NgOnInit() {
-    this.authService.user$.subscribe(loggeduser => {
-      this.loggeduser = loggeduser;
-      //  this.user = this.authService.currentUser;
+  userName: String = "";
+  email: string = "";
+
+  constructor(private authService: AuthService) { }
+  ngOnInit() {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
     });
+    if (this.user != null) {
+      this.userName = this.user.username;
+    }
   }
+    CreateTransaction(){
+      const token = localStorage.getItem("token");
 
-  CreateTransaction() {
-    const newTransaction = {
-      TransactionName: this.form.get('TransactionName')?.value,
-      TransactionPrice: this.form.get('TransactionPrice')?.value,
-      TransactionCategory: this.form.get('TransactionCategory')?.value,
-      TransactionDate: this.form.get('TransactionDate')?.value
-    };
-    this.http.post(`${this.apiUrl}/createtransaction`, newTransaction).subscribe({
-      next: res => { console.log("Transaction Created") }
-      , error: err => console.error('Failed to create user', err)
-    })
+      const headers = new HttpHeaders({
+        "Authorization": `Bearer ${token}`
+      });
+
+
+
+      console.log(this.user)
+      const newTransaction = {
+        TransactionName: this.form.get('TransactionName')?.value,
+        TransactionPrice: this.form.get('TransactionPrice')?.value,
+        TransactionCategory: this.form.get('TransactionCategory')?.value,
+        TransactionDate: this.form.get('TransactionDate')?.value
+      };
+      console.log(newTransaction) 
+      console.log("Running - Trnsaction")
+      this.http.post(`${this.apiUrl}/createtransaction`, newTransaction, { headers }).subscribe({
+        next: res => { console.log(newTransaction) }
+        , error: err => console.error('Failed to create user', err)
+      })
+    }
   }
-
 
  
   //Create Transaction  - Amount, Category, Date, Name
@@ -60,5 +73,5 @@ export class TransactionComponent {
   //Show last 5 transactions - seperatee page to view all
   //Option to delete transactions on view page,
   // Count transaction category spending and show on main page
+ 
 
-}

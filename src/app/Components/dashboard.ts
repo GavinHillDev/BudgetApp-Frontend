@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Console, error } from 'console';
-import { AuthService } from '../Services/login.service';
+import { AuthService, User } from '../Services/login.service';
 @Component({
   selector: 'dashboard',
   standalone: true,
@@ -13,6 +13,7 @@ import { AuthService } from '../Services/login.service';
   //styleUrl: './app.css'
 
 }) export class DashboardComponent {
+  user: User | null = null;
 
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5113/api/Users/me';
@@ -21,14 +22,20 @@ import { AuthService } from '../Services/login.service';
 
   constructor(private authService: AuthService) { }
   ngOnInit() {
-    this.authService.loadUser();
-    var user = this.authService.currentUser;
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+    });
+    if (this.user != null) {
+      this.userName = this.user.username;
+    }
+    //this.authService.loadUser();
+    // var user = this.authService.currentUser;
 
-    console.log(user?.username.toString())
-    if (user != null) {
-      this.userName = user.username.toString();
-    } 
-     
+    console.log(this.user?.username)
+    //if (user != null) {
+    //  this.userName = user.username.toString();
+    //} 
+  
   }
  
  

@@ -9,7 +9,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule,RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: '../Html/navbar.html',
   //styleUrl: './app.css'
 
@@ -31,12 +31,13 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
         this.noUser = false;
         this.userLoggedIn = true;
       }
-    });
+    })
+    //});
     //if (this.authService.loadUser() != null) {
     //  this.user = this.authService.currentUser;
     //  this.noUser = false;
     //  this.userLoggedIn = true;
-    //  console.log(this.user?.username)
+    //  console.log(this.user?.username + "E")
     //}
 
 
@@ -45,6 +46,6 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
     //Persist login
     //Check login /signup
   }
- 
+
 }
 
