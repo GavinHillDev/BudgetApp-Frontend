@@ -28,13 +28,6 @@ import { AuthService, User } from '../Services/login.service';
     if (this.user != null) {
       this.userName = this.user.username;
     }
-    //this.authService.loadUser();
-    // var user = this.authService.currentUser;
-
-    console.log(this.user?.username)
-    //if (user != null) {
-    //  this.userName = user.username.toString();
-    //} 
   
   }
  

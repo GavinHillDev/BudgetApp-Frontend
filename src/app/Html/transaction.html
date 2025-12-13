@@ -15,6 +15,32 @@
 
     </form>
 
+    <ul>
+      @for (item of transactions; track item.id) {
+      <li>{{ item.transactionName }}</li>
+      } @empty {
+      <li>No items to display.</li>
+      }
+    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Date</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transactions">
+          <td>{{ t.transactionName }}</td>
+          <td>{{ t.transactionPrice }}</td>
+          <td>{{ t.transactionDate }}</td>
+          <td>{{ t.categoryName }}</td>
+        </tr>
+      </tbody>
+    </table>
+
     <button type="button" (click)="CreateTransaction()">Add Transaction</button>
   </div>
 </main>

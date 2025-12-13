@@ -18,7 +18,7 @@ import { AuthService, User } from '../Services/login.service';
 })
 
 export class TransactionComponent {
-  //constructor(private authService: AuthService) { }
+
   form = new FormGroup({
     TransactionName: new FormControl(''),
     TransactionPrice: new FormControl(''),
@@ -32,15 +32,17 @@ export class TransactionComponent {
   private apiUrl = 'http://localhost:5113/api/Transactions';
   userName: String = "";
   email: string = "";
-
+  transactions: any[] = [];
   constructor(private authService: AuthService) { }
   ngOnInit() {
     this.authService.user$.subscribe(user => {
       this.user = user;
+      if (this.user != null) {
+        this.userName = this.user.username;
+        this.loadTransaction();
+      }
     });
-    if (this.user != null) {
-      this.userName = this.user.username;
-    }
+
   }
     CreateTransaction(){
       const token = localStorage.getItem("token");
@@ -64,7 +66,23 @@ export class TransactionComponent {
         next: res => { console.log(newTransaction) }
         , error: err => console.error('Failed to create user', err)
       })
-    }
+      this.form.reset();
+      this.loadTransaction();
+  }
+  loadTransaction() {
+    const token = localStorage.getItem("token");
+
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${token}`
+    });
+    this.http.get('http://localhost:5113/api/Transactions', { headers }).subscribe({
+      next: res => { console.log(res), this.transactions = res as any[] }
+      , error: err => console.error(err)
+    })
+    console.log("Test")
+    console.log(this.transactions.length)
+    console.log(this.transactions)
+  }
   }
 
  

@@ -32,19 +32,6 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
         this.userLoggedIn = true;
       }
     })
-    //});
-    //if (this.authService.loadUser() != null) {
-    //  this.user = this.authService.currentUser;
-    //  this.noUser = false;
-    //  this.userLoggedIn = true;
-    //  console.log(this.user?.username + "E")
-    //}
-
-
-    console.log("I am running")
-    //Remove Login Signup and change links once user is signed in
-    //Persist login
-    //Check login /signup
   }
 
 }
