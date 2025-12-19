@@ -10,6 +10,13 @@
       <input type="number" formControlName="TransactionPrice" placeholder="Transaction Price">
       <label for="TransactionCategory">Category: </label>
       <input type="search" formControlName="TransactionCategory" placeholder="Transaction Category">
+      <datalist>
+        @for (item of categories; track item.id) {
+        <option>{{ item.categoryName }}</option>
+        } @empty {
+        <option>No items to display.</option>
+        }
+      </datalist>
       <label for="TransactionDate">Date: </label>
       <input type="date" formControlName="TransactionDate" placeholder="Transaction Date">
 

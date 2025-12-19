@@ -33,6 +33,7 @@ export class TransactionComponent {
   userName: String = "";
   email: string = "";
   transactions: any[] = [];
+  categories: any[] = [];
   constructor(private authService: AuthService) { }
   ngOnInit() {
     this.authService.user$.subscribe(user => {
@@ -79,6 +80,10 @@ export class TransactionComponent {
       next: res => { console.log(res), this.transactions = res as any[] }
       , error: err => console.error(err)
     })
+    this.http.get('http://localhost:5113/api/TransactionCategories', { headers }).subscribe({
+      next: res => { console.log(res), this.categories = res as any[] }
+      , error: err => console.error(err)
+    })
     console.log("Test")
     console.log(this.transactions.length)
     console.log(this.transactions)
@@ -86,10 +91,10 @@ export class TransactionComponent {
   }
 
  
-  //Create Transaction  - Amount, Category, Date, Name
-  //Dropdown category - Option to creat new category
+  //Create Transaction  - Amount, Category, Date, Name -----Check
+//Dropdown category - Option to creat new category -----Working
   //Show last 5 transactions - seperatee page to view all
-  //Option to delete transactions on view page,
+  //Option to delete transactions on view page and create page
   // Count transaction category spending and show on main page
  
 
