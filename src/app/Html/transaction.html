@@ -9,14 +9,21 @@
       <label for="TransactionPrice">Price: </label>
       <input type="number" formControlName="TransactionPrice" placeholder="Transaction Price">
       <label for="TransactionCategory">Category: </label>
-      <input type="search" formControlName="TransactionCategory" placeholder="Transaction Category">
-      <datalist>
+      <input type="text" formControlName="TransactionCategory" list="categoryList" placeholder="Transaction Category">
+      <datalist id="categoryList">
         @for (item of categories; track item.id) {
-        <option>{{ item.categoryName }}</option>
+        <option [value]="item.categoryName"></option>
         } @empty {
-        <option>No items to display.</option>
+        <option value="">No categories</option>
         }
       </datalist>
+      <!--<datalist id="categoryList">
+    @for (item of categories; track item.id) {
+    <option[value]="item.categoryName"></option[value]>
+    } @empty {
+    <option value="">No items to display.</option>
+    }
+  </datalist>-->
       <label for="TransactionDate">Date: </label>
       <input type="date" formControlName="TransactionDate" placeholder="Transaction Date">
 
@@ -36,6 +43,7 @@
           <th>Price</th>
           <th>Date</th>
           <th>Category</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +52,7 @@
           <td>{{ t.transactionPrice }}</td>
           <td>{{ t.transactionDate }}</td>
           <td>{{ t.categoryName }}</td>
+          <td><button (click)="DeleteTransaction(t.id)">Delete</button></td>
         </tr>
       </tbody>
     </table>
