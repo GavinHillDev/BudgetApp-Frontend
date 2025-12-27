@@ -1,9 +1,33 @@
 <main class="main">
   <div class="content">
-    <h1>This is the dashboard</h1>
     <h1 id="UserName">Hello {{userName}}</h1>
+    <h1>You Have Spent ${{amountSpent}}</h1>
     <!--<button type="button" (click)="checkForUser()">Check</button>-->
   </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of transactions">
+        <td>{{ t.transactionName }}</td>
+        <td>{{ t.transactionPrice }}</td>
+        <td>{{ t.transactionDate }}</td>
+        <td>{{ t.categoryName }}</td>
+        <td><button (click)="DeleteTransaction(t.id)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+ 
+
 </main>
 
 

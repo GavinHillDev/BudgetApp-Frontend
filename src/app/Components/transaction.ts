@@ -61,27 +61,28 @@ export class TransactionComponent {
         TransactionCategory: this.form.get('TransactionCategory')?.value,
         TransactionDate: this.form.get('TransactionDate')?.value
       };
+      console.log(this.transactions)
+ 
       console.log(newTransaction) 
       console.log("Running - Trnsaction")
       this.http.post(`${this.apiUrl}/createtransaction`, newTransaction, { headers }).subscribe({
         next: () => {
+          this.transactions.push(newTransaction);
+          console.log(this.transactions);
           this.form.reset();
-          this.loadTransaction();
+         // this.loadTransaction();
           console.log(newTransaction)
         }
         , error: err => console.error('Failed to create user', err)
       })
   }
   loadTransaction() {
+    console.log("E")
     const token = localStorage.getItem("token");
 
     const headers = new HttpHeaders({
       "Authorization": `Bearer ${token}`
     });
-    this.http.get('http://localhost:5113/api/Transactions', { headers }).subscribe({
-      next: res => { console.log(res), this.transactions = res as any[] }
-      , error: err => console.error(err)
-    })
     this.http.get('http://localhost:5113/api/TransactionCategories', { headers }).subscribe({
       next: res => { console.log(res), this.categories = res as any[] }
       , error: err => console.error(err)
@@ -105,12 +106,3 @@ export class TransactionComponent {
     })
   }
   }
-
- 
-  //Create Transaction  - Amount, Category, Date, Name -----Check
-//Dropdown category - Option to creat new category -----Check
-  //Show last 5 transactions - seperatee page to view all
-  //Option to delete transactions on view page and create page
-  // Count transaction category spending and show on main page
- 
-

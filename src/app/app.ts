@@ -9,5 +9,5 @@ import { NavbarComponent } from './Components/navbar';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Budget Application');
+  protected readonly title = signal('Your Budget Application');
 }

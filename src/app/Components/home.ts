@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
   selector: 'home',
   standalone: true,
   template: `
-    <h1>Welcome to Budget Application</h1>
-    <p>This is the home page.</p>
+    <h1>Welcome to Your Budget Tracker</h1>
+    <h2>Please Login or Sign up to continue</h2>
   `
 })
 export class HomeComponent {

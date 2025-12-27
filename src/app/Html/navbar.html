@@ -23,7 +23,6 @@
   <div *ngIf="userLoggedIn" class="pill-group">
     @for (item of [
     { title: 'Add Expense', link: '/transaction' },
-    { title: 'View Expenses', link: '/signup' },
     { title: 'Dashboard', link: '/dashboard' }
     ]; track item.title) {
     <a class="pill"
@@ -40,22 +39,5 @@
     </a>
     }
   </div>
-  <!--<ul *ngIf="user">-->
-  <!--<ul>
-    class="nav-links">
-    <li><a routerLink="/dashboard">Dashboard</a></li>
-    <li><a routerLink="/create">Create</a></li>
-    <li><a routerLink="/history">History</a></li>
-  </ul>
 
-  <ul *ngIf="NoUser">
-    class="nav-links">
-    <li><a routerLink="/dashboard">Dashboard</a></li>
-    <li><a routerLink="/create">Create</a></li>
-    <li><a routerLink="/history">History</a></li>
-  </ul>-->
-  <!--<div class="user-section">-->
-  <!--<span *ngIf="user">Hi, {{ user.username }}</span>-->
-  <!--<button *ngIf="user" (click)="logout()">Logout</button>
-  </div>-->
 </nav>

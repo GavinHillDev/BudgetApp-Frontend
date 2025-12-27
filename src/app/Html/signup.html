@@ -1,6 +1,6 @@
 <main class="main">
   <div class="content">
-    <h1>This is a Sign Up Page</h1>
+    <h1>Please Sign Up</h1>
     <h1 *ngIf="userExists" style="color: red">User already Exists. <br /> Please Log In Instead</h1>
 
     <form [formGroup]="form">
@@ -12,11 +12,6 @@
       <input type="password" formControlName="Password" placeholder="Password">
      
     </form>
-
-
-    <!--<p>Value: {{ username.value }}</p>
-    <p>Value: {{ email.value }}</p>
-    <p>Value: {{ password.value }}</p>-->
     <button type="button" (click)="validateSignUp()">Sign Up</button>
   </div>
 </main>
