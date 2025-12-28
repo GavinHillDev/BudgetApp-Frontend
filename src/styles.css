@@ -146,3 +146,76 @@ td button {
   .pill.active {
     background-color: #2563eb;
   }
+modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal box */
+.modal {
+  background: #ffffff;
+  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+  /* Title */
+  .modal h2 {
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  /* Form */
+  .modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Labels & inputs */
+  .modal label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+  }
+
+  .modal input {
+    margin-top: 4px;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+/* Buttons */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+  .btn.cancel {
+    background: #e0e0e0;
+  }
+
+  .btn.save {
+    background: #1976d2;
+    color: white;
+  }

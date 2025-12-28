@@ -54,30 +54,24 @@ export class TransactionComponent {
 
 
 
-      console.log(this.user)
+
       const newTransaction = {
         TransactionName: this.form.get('TransactionName')?.value,
         TransactionPrice: this.form.get('TransactionPrice')?.value,
         TransactionCategory: this.form.get('TransactionCategory')?.value,
         TransactionDate: this.form.get('TransactionDate')?.value
       };
-      console.log(this.transactions)
- 
-      console.log(newTransaction) 
-      console.log("Running - Trnsaction")
+
       this.http.post(`${this.apiUrl}/createtransaction`, newTransaction, { headers }).subscribe({
         next: () => {
           this.transactions.push(newTransaction);
-          console.log(this.transactions);
           this.form.reset();
-         // this.loadTransaction();
-          console.log(newTransaction)
+
         }
         , error: err => console.error('Failed to create user', err)
       })
   }
   loadTransaction() {
-    console.log("E")
     const token = localStorage.getItem("token");
 
     const headers = new HttpHeaders({
@@ -87,9 +81,7 @@ export class TransactionComponent {
       next: res => { console.log(res), this.categories = res as any[] }
       , error: err => console.error(err)
     })
-    console.log("Test")
-    console.log(this.transactions.length)
-    console.log(this.transactions)
+
   }
   DeleteTransaction(id: number) {
     const token = localStorage.getItem("token");

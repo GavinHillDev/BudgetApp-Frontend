@@ -22,6 +22,19 @@ import { AuthService, User } from '../Services/login.service';
   transactions: any[] = [];
   categories: any[] = [];
   amountSpent: Number = 0;
+  isUpdateOpen = false;
+  selectedTransaction: Transaction | null = null;
+  selectedTransactionId: number | null = null;
+
+  form = new FormGroup({
+    TransactionNameUpdate: new FormControl(''),
+    TransactionPriceUpdate: new FormControl(''),
+    TransactionCategoryUpdate: new FormControl(''),
+    TransactionDateUpdate: new FormControl('')
+  });
+
+
+
   constructor(private authService: AuthService) { }
   ngOnInit() {
     this.authService.user$.subscribe(user => {
@@ -43,14 +56,8 @@ import { AuthService, User } from '../Services/login.service';
       next: res => { console.log(res), this.transactions = res as any[], this.Calculate() }
       , error: err => console.error(err)
     })
-    this.http.get('http://localhost:5113/api/TransactionCategories', { headers }).subscribe({
-      next: res => { console.log(res), this.categories = res as any[] }
-      , error: err => console.error(err)
-    })
+
      
-    console.log("Test")
-    console.log(this.transactions.length)
-    console.log(this.transactions)
   }
   DeleteTransaction(id: number) {
     const token = localStorage.getItem("token");
@@ -61,17 +68,69 @@ import { AuthService, User } from '../Services/login.service';
     this.http.post(`http://localhost:5113/api/Transactions/deletetransaction`, id, { headers }).subscribe({
       next: () => {
         this.loadTransaction();
-        console.log("Deleted")
       }
       , error: err => console.error('Failed to create user', err)
     })
   }
   Calculate() {
     for (let i: number = 0; i < this.transactions.length; i++) {
-      console.log(this.transactions[i])
       this.amountSpent += this.transactions[i].transactionPrice
     }
+  }
+  UpdateTransaction(transaction: Transaction) {
+
+    const token = localStorage.getItem("token");
+
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${token}`
+    });
+    this.http.get('http://localhost:5113/api/TransactionCategories', { headers }).subscribe({
+      next: res => { console.log(res), this.categories = res as any[] }
+      , error: err => console.error(err)
+    })
+
+    this.selectedTransaction = transaction;
+    this.selectedTransactionId = transaction.id;
+    this.isUpdateOpen = true;
+    this.form.patchValue({
+      TransactionNameUpdate: transaction.transactionName,
+      TransactionPriceUpdate: transaction.transactionPrice.toString(),
+      TransactionCategoryUpdate: transaction.categoryName,
+      TransactionDateUpdate: transaction.transactionDate
+    })
+ 
+   };
+  closeUpdate() {
+    this.isUpdateOpen = false;
+  }
+  SubmitUpdate() {
+    const token = localStorage.getItem("token");
+
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${token}`
+    });
+    const updatedTransaction = {
+      TransactionName: this.form.get('TransactionNameUpdate')?.value,
+      TransactionPrice: this.form.get('TransactionPriceUpdate')?.value,
+      TransactionCategory: this.form.get('TransactionCategoryUpdate')?.value,
+      TransactionDate: this.form.get('TransactionDateUpdate')?.value
+    };
+
+    this.http.put(`http://localhost:5113/api/Transactions/${this.selectedTransactionId}`, updatedTransaction, { headers }).subscribe({
+      next: () => {
+        this.loadTransaction();
+        this.closeUpdate();
+      }
+      , error: err => console.error('Failed to create user', err)
+    })
+  }
 
   }
-  }
-
+ 
+export interface Transaction {
+  id: number;
+  transactionName: string;
+  transactionPrice: number;
+  transactionDate: string;
+  categoryName: string;
+}

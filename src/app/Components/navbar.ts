@@ -26,7 +26,6 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   navBarRun() {
     this.authService.user$.subscribe(user => {
       this.user = user;
-      //  this.user = this.authService.currentUser;
       if (this.user != null) {
         this.noUser = false;
         this.userLoggedIn = true;
